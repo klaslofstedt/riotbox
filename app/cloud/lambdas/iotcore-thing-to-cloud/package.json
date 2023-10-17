@@ -1,0 +1,16 @@
+{
+  "name": "iotcore-thing-to-cloud",
+  "version": "1.0.0",
+  "description": "Function to update the Dynamo table with values from the Thing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-appsync": "^4.0.3",
+    "aws-sdk": "^2.1030.0",
+    "graphql-tag": "^2.12.6"
+  }
+}

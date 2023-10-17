@@ -1,0 +1,3 @@
+.env
+secrets/decrypted/
+.DS_Store

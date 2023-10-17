@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  riotbox:
+    stdin_open: true
+    tty: true
+    user: root
+    build: 
+      context: .
+      args:
+        - PROJECT_NAME=${PROJECT_NAME}
+        - SECRETS_PASSWORD=${SECRETS_PASSWORD}
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY_ID=${AWS_SECRET_ACCESS_KEY_ID}
+        - AWS_REGION=${AWS_REGION}
+    volumes:
+      - ./app:/riotbox/app
+      - ./scripts:/riotbox/scripts
+      - ./secrets:/riotbox/secrets
+    environment:
+      - APP_AMPLIFY_PATH=/riotbox/app/mobile
+      - APP_CDK_PATH=/riotbox/app/cloud
+      - APP_ESP32_PATH=/riotbox/app/thing
+      - APP_SCRIPTS_PATH=/riotbox/scripts
+      - APP_SECRETS_DECRYPTED_PATH=/riotbox/secrets/decrypted
+      - APP_SECRETS_ENCRYPTED_PATH=/riotbox/secrets/encrypted
+      - APP_PROJECT_PATH=/riotbox
+      - PROFILE=riotbox
+      - PROJECT_NAME
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY_ID
+      - AWS_REGION
+      - SECRETS_PASSWORD
+    command: >
+      bash -c "
+      cd /riotbox/app/mobile && npm install && \
+      cd /riotbox/app/cloud && npm install && \
+      cd /riotbox/app/cloud/lambdas/api-things && npm install && \
+      cd /riotbox/app/cloud/lambdas/iotcore-cloud-to-thing && npm install && \
+      cd /riotbox/app/cloud/lambdas/iotcore-thing-to-cloud && npm install && \
+      cd /riotbox && \
+      exec bash"

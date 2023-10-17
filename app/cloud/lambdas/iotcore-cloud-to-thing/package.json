@@ -1,0 +1,14 @@
+{
+  "name": "iotcore-cloud-to-thing",
+  "version": "1.0.0",
+  "description": "Function to update thing with new Dynamo value as well as responding to /otaurl with  a signed OTA URL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1030.0"
+  }
+}

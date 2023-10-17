@@ -1,0 +1,41 @@
+# graphql/schema.graphql
+type Thing @aws_cognito_user_pools @aws_iam {
+    id: ID!
+    owner: String!
+    type: String!
+    value: String # Empty on deploy
+    aes: String!
+    pop: String!
+    qr: String!
+    deployed: String!
+    provisioned: String # Empty on deploy
+    synced: String!
+    updater: String # Empty on deploy
+}
+
+input ThingValueChangeInput {
+    id: ID!
+    value: String!
+}
+
+type Query {
+    thingGetById(thingId: ID!): Thing
+    thingGetByIdFromLambda(thingId: ID!): Thing @aws_iam
+    thingsGetByOwner: [Thing] @aws_cognito_user_pools
+}
+
+type Mutation {
+    thingProvision(thingId: ID!): Thing
+    thingDeprovision(thingId: ID!): Thing
+    thingValueChange(thing: ThingValueChangeInput!): Thing
+    thingValueChangeFromLambda(thing: ThingValueChangeInput!): Thing @aws_iam
+}
+
+type Subscription {
+    onThingProvisionChange(owner: String): Thing
+        @aws_subscribe(mutations: ["thingProvision", "thingDeprovision"])
+    onThingValueChange(owner: String): Thing
+        @aws_subscribe(
+            mutations: ["thingValueChange", "thingValueChangeFromLambda"]
+        )
+}
