@@ -1,3 +1,6 @@
 .env
-secrets/decrypted/
 .DS_Store
+# Ignore all files in the subdirectories of secrets/decrypted
+secrets/decrypted/*/*
+# But don't ignore the .gitkeep files
+!secrets/decrypted/**/.gitkeep
